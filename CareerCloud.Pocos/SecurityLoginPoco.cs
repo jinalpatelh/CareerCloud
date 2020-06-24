@@ -1,19 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CareerCloud.Pocos
 {
     [Table("Security_Logins")]
-    public class SecurityLoginPoco :IPoco
+    public class SecurityLoginPoco : IPoco
     {
         [Key]
         public Guid Id { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
-        
+
         [Column("Created_Date")]
         public DateTime Created { get; set; }
 
@@ -25,13 +23,13 @@ namespace CareerCloud.Pocos
 
         [Column("Is_Locked")]
         public bool IsLocked { get; set; }
-        
+
         [Column("Is_Inactive")]
         public bool IsInactive { get; set; }
 
         [Column("Email_Address")]
         public string EmailAddress { get; set; }
-        
+
         [Column("Phone_Number")]
         public string PhoneNumber { get; set; }
 
@@ -43,7 +41,7 @@ namespace CareerCloud.Pocos
 
         [Column("Prefferred_Language")]
         public string PrefferredLanguage { get; set; }
-        
+
         [Column("Time_Stamp")]
         public byte[] TimeStamp { get; set; }
     }
