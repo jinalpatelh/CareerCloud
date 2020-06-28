@@ -23,7 +23,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"INSERT INTO [dbo].[System_Language_Codes]
                                                        ([LanguageID]
                                                        ,[Name]
-                                                       ,[Native_Name]
+                                                       ,[Native_Name])
                                                  VALUES
                                                        (@LanguageID
                                                        ,@Name
@@ -67,8 +67,7 @@ namespace CareerCloud.ADODataAccessLayer
                 reader.Close();
                 conn.Close();
             }
-            return pocos;
-
+            return pocos.Where(a => a != null).ToList();
         }
 
         public IList<SystemLanguageCodePoco> GetList(Expression<Func<SystemLanguageCodePoco, bool>> where, params Expression<Func<SystemLanguageCodePoco, object>>[] navigationProperties)
@@ -92,8 +91,8 @@ namespace CareerCloud.ADODataAccessLayer
                 foreach (SystemLanguageCodePoco poco in items)
                 {
                     cmd.CommandText = @"DELETE FROM[dbo].[System_Language_Codes]
-                        WHERE [Language_ID] = @Language_ID";
-                    cmd.Parameters.AddWithValue("@Language_ID", poco.LanguageID);
+                        WHERE [LanguageID] = @LanguageID";
+                    cmd.Parameters.AddWithValue("@LanguageID", poco.LanguageID);
 
                     cmd.ExecuteNonQuery();
                 }

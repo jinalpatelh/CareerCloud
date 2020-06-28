@@ -24,7 +24,7 @@ namespace CareerCloud.ADODataAccessLayer
                                            ([Id]
                                            ,[Applicant]
                                            ,[Job]
-                                           ,[Application_Date]
+                                           ,[Application_Date])
                                      VALUES
                                            (@Id
                                            ,@Applicant
@@ -32,7 +32,7 @@ namespace CareerCloud.ADODataAccessLayer
                                            ,@Application_Date)";
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Applicant", poco.Applicant);
-                    cmd.Parameters.AddWithValue("@Major", poco.Job);
+                    cmd.Parameters.AddWithValue("@Job", poco.Job);
                     cmd.Parameters.AddWithValue("@Application_Date", poco.ApplicationDate);
                     
                     cmd.ExecuteNonQuery();
@@ -64,7 +64,6 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Applicant = reader.GetGuid(1);
                     poco.Job = reader.GetGuid(2);
                     poco.ApplicationDate = reader.GetDateTime(3);
-                    poco.TimeStamp = reader[4] as byte[];
 
                     pocos[position] = poco;
                     position++;
@@ -118,13 +117,11 @@ namespace CareerCloud.ADODataAccessLayer
                                            SET [Applicant] = @Applicant
                                               ,[Job] = @Job
                                               ,[Application_Date] = @Application_Date
-                                              ,[Time_Stamp] = @Time_Stamp
                                          WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Applicant", poco.Applicant);
                     cmd.Parameters.AddWithValue("@Job", poco.Job);
                     cmd.Parameters.AddWithValue("@Application_Date", poco.ApplicationDate);
-                    cmd.Parameters.AddWithValue("@Time_Stamp", poco.TimeStamp);
  
                     cmd.ExecuteNonQuery();
                 }

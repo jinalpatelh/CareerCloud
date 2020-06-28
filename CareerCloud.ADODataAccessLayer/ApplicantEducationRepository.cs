@@ -8,7 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
-
 namespace CareerCloud.ADODataAccessLayer
 {
     public class ApplicantEducationRepository : IDataRepository<ApplicantEducationPoco>
@@ -45,7 +44,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.Parameters.AddWithValue("@Start_Date", poco.StartDate);
                     cmd.Parameters.AddWithValue("@Completion_Date", poco.CompletionDate);
                     cmd.Parameters.AddWithValue("@Completion_Percent", poco.CompletionPercent);
-
+                    
                     cmd.ExecuteNonQuery();
                 }
                 conn.Close();
@@ -79,15 +78,14 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.StartDate = reader.IsDBNull(4) ? null : reader.GetDateTime(4) as DateTime?;
                     poco.CompletionDate = reader.IsDBNull(5) ? null : reader.GetDateTime(5) as DateTime?;
                     poco.CompletionPercent = reader.IsDBNull(6) ? null : reader.GetByte(6) as byte?;
-                    poco.TimeStamp = reader[7] as byte[];
-
+                    
                     pocos[position] = poco;
                     position++;
                 }
                 reader.Close();
                 conn.Close();
             }
-            return pocos.Where(a => a != null).ToList();
+            return pocos.Where(a=>a!=null).ToList();
         }
 
         public IList<ApplicantEducationPoco> GetList(Expression<Func<ApplicantEducationPoco, bool>> where, params Expression<Func<ApplicantEducationPoco, object>>[] navigationProperties)

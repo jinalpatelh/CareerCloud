@@ -23,7 +23,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"INSERT INTO [dbo].[Security_Logins_Roles]
                                                        ([Id]
                                                        ,[Login]
-                                                       ,[Role]
+                                                       ,[Role])
                                                  VALUES
                                                        (@Id
                                                        ,@Login
@@ -70,7 +70,7 @@ namespace CareerCloud.ADODataAccessLayer
                 reader.Close();
                 conn.Close();
             }
-            return pocos;
+            return pocos.Where(a=>a!=null).ToList();
 
         }
 

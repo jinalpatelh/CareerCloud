@@ -69,18 +69,18 @@ namespace CareerCloud.ADODataAccessLayer
 
                     poco.Id = reader.GetGuid(0);
                     poco.RegistrationDate = reader.GetDateTime(1);
-                    poco.CompanyWebsite = reader.GetString(2);
+                    poco.CompanyWebsite = reader.IsDBNull(2)? null : reader.GetString(2);
                     poco.ContactPhone = reader.GetString(3);
-                    poco.ContactName = reader.GetString(4);
+                    poco.ContactName = reader.IsDBNull(4) ? null : reader.GetString(4);
                     poco.CompanyLogo = reader.GetValue(5) as byte[];
-                    poco.TimeStamp = reader[6] as byte[];
+
                     pocos[position] = poco;
                     position++;
                 }
                 reader.Close();
                 conn.Close();
             }
-            return pocos;
+            return pocos.Where(a=>a!=null).ToList();
         }
 
         public IList<CompanyProfilePoco> GetList(Expression<Func<CompanyProfilePoco, bool>> where, params Expression<Func<CompanyProfilePoco, object>>[] navigationProperties)

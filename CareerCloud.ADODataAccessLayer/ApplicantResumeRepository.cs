@@ -23,15 +23,18 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"INSERT INTO [dbo].[Applicant_Resumes]
                                            ([Id]
                                            ,[Applicant]
-                                           ,[Resume])
+                                           ,[Resume]
+                                           ,[Last_Updated])
                                      VALUES
                                            (@Id
                                            ,@Applicant
-                                           ,@Resume)";
+                                           ,@Resume
+                                           ,@Last_Updated)";
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Applicant", poco.Applicant);
-                    cmd.Parameters.AddWithValue("@Major", poco.Resume);
-                    
+                    cmd.Parameters.AddWithValue("@Resume", poco.Resume);
+                    cmd.Parameters.AddWithValue("@Last_Updated", poco.LastUpdated);
+
                     cmd.ExecuteNonQuery();
                 }
                 conn.Close();
@@ -50,7 +53,7 @@ namespace CareerCloud.ADODataAccessLayer
 
             using (SqlConnection conn = new SqlConnection(BaseAdo.connectionString))
             {
-                SqlCommand cmd = new SqlCommand(@"SELECT * FROM[dbo].[Applicant_Educations]", conn);
+                SqlCommand cmd = new SqlCommand(@"SELECT * FROM[dbo].[Applicant_Resumes]", conn);
                 int position = 0;
                 conn.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
@@ -120,6 +123,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Applicant", poco.Applicant);
                     cmd.Parameters.AddWithValue("@Resume", poco.Resume);
+                    cmd.Parameters.AddWithValue("@Last_Updated", poco.LastUpdated);
 
                     cmd.ExecuteNonQuery();
                 }

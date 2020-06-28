@@ -24,16 +24,16 @@ namespace CareerCloud.ADODataAccessLayer
                                            ([Id]
                                            ,[Job]
                                            ,[Job_Name]
-                                           ,[Job_Description])
+                                           ,[Job_Descriptions])
                                      VALUES
                                            (@Id
                                            ,@Job
                                            ,@Job_Name
-                                           ,@Job_Description)";
+                                           ,@Job_Descriptions)";
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Job", poco.Job);
                     cmd.Parameters.AddWithValue("@Job_Name", poco.JobName);
-                    cmd.Parameters.AddWithValue("@Job_Description", poco.JobDescriptions);
+                    cmd.Parameters.AddWithValue("@Job_Descriptions", poco.JobDescriptions);
                    
                     cmd.ExecuteNonQuery();
                 }
@@ -48,7 +48,7 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<CompanyJobDescriptionPoco> GetAll(params Expression<Func<CompanyJobDescriptionPoco, object>>[] navigationProperties)
         {
-            CompanyJobDescriptionPoco[] pocos = new CompanyJobDescriptionPoco[1000];
+            CompanyJobDescriptionPoco[] pocos = new CompanyJobDescriptionPoco[1001];
 
             using (SqlConnection conn = new SqlConnection(BaseAdo.connectionString))
             {
@@ -118,7 +118,6 @@ namespace CareerCloud.ADODataAccessLayer
                                            SET [Job] = @Job
                                               ,[Job_Name] = @Job_Name
                                               ,[Job_Descriptions] = @Job_Descriptions
-                                              ,[Company_Description] = @Company_Description
                                          WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Job", poco.Job);

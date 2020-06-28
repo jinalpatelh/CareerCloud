@@ -86,10 +86,8 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Country = reader.GetString(5);
                     poco.Province = reader.GetString(6);
                     poco.Street = reader.GetString(7);
-                    poco.Province = reader.GetString(8);
-                    poco.City = reader.GetString(9);
-                    poco.PostalCode = reader.GetString(10);
-                    poco.TimeStamp = reader[11] as byte[];
+                    poco.City = reader.GetString(8);
+                    poco.PostalCode = reader.GetString(9);
 
                     pocos[position] = poco;
                     position++;
@@ -148,7 +146,7 @@ namespace CareerCloud.ADODataAccessLayer
                                               ,[State_Province_Code] = @State_Province_Code
                                               ,[Street_Address] = @Street_Address
                                               ,[City_Town]= @City_Town
-                                              ,[Zip_Postal_Code] = Zip_Postal_Code
+                                              ,[Zip_Postal_Code] = @Zip_Postal_Code
                                          WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Login", poco.Login);

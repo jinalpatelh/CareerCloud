@@ -65,9 +65,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.ExecuteNonQuery();
                 }
                 conn.Close();
-
             }
-
         }
 
         public void CallStoredProc(string name, params Tuple<string, string>[] parameters)
@@ -98,10 +96,10 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.IsLocked = reader.GetBoolean(6);
                     poco.IsInactive = reader.GetBoolean(7);
                     poco.EmailAddress = reader.GetString(8);
-                    poco.PhoneNumber = reader.GetString(9);
+                    poco.PhoneNumber = reader.IsDBNull(9) ? null : reader.GetString(9);
                     poco.FullName = reader.GetString(10);
                     poco.ForceChangePassword = reader.GetBoolean(11);
-                    poco.PrefferredLanguage = reader.GetString(12);
+                    poco.PrefferredLanguage = reader.IsDBNull(12) ? null : reader.GetString(12);
                     poco.TimeStamp = reader[13] as byte[];
                     pocos[position] = poco;
                     position++;
@@ -109,13 +107,14 @@ namespace CareerCloud.ADODataAccessLayer
                 reader.Close();
                 conn.Close();
             }
-            return pocos;
+            return pocos.Where(a=>a!=null).ToList();
         }
 
         public IList<SecurityLoginPoco> GetList(Expression<Func<SecurityLoginPoco, bool>> where, params Expression<Func<SecurityLoginPoco, object>>[] navigationProperties)
         {
             throw new NotImplementedException();
         }
+
         public SecurityLoginPoco GetSingle(Expression<Func<SecurityLoginPoco, bool>> where, params Expression<Func<SecurityLoginPoco, object>>[] navigationProperties)
         {
             IQueryable<SecurityLoginPoco> pocos = GetAll().AsQueryable();

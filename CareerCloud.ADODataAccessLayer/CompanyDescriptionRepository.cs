@@ -76,7 +76,7 @@ namespace CareerCloud.ADODataAccessLayer
                 reader.Close();
                 conn.Close();
             }
-            return pocos;
+            return pocos.Where(a=> a!=null).ToList();
         }
 
         public IList<CompanyDescriptionPoco> GetList(Expression<Func<CompanyDescriptionPoco, bool>> where, params Expression<Func<CompanyDescriptionPoco, object>>[] navigationProperties)

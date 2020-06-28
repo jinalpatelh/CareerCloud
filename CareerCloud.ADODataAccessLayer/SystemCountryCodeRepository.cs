@@ -22,7 +22,7 @@ namespace CareerCloud.ADODataAccessLayer
                 {
                     cmd.CommandText = @"INSERT INTO [dbo].[System_Country_Codes]
                                                        ([Code]
-                                                       ,[Name]
+                                                       ,[Name])
                                                  VALUES
                                                        (@Code
                                                        ,@Name)";
@@ -63,7 +63,7 @@ namespace CareerCloud.ADODataAccessLayer
                 reader.Close();
                 conn.Close();
             }
-            return pocos;
+            return pocos.Where(a=> a!=null).ToList();
         }
 
         public IList<SystemCountryCodePoco> GetList(Expression<Func<SystemCountryCodePoco, bool>> where, params Expression<Func<SystemCountryCodePoco, object>>[] navigationProperties)

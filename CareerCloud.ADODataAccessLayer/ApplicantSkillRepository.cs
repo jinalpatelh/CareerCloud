@@ -45,7 +45,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.Parameters.AddWithValue("@Start_Month", poco.StartMonth);
                     cmd.Parameters.AddWithValue("@Start_Year", poco.StartYear);
                     cmd.Parameters.AddWithValue("@End_Month", poco.EndMonth);
-                    cmd.Parameters.AddWithValue("@End_Month", poco.EndYear);
+                    cmd.Parameters.AddWithValue("@End_year", poco.EndYear);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -146,7 +146,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.Parameters.AddWithValue("@Start_Month", poco.StartMonth);
                     cmd.Parameters.AddWithValue("@Start_Year", poco.StartYear);
                     cmd.Parameters.AddWithValue("@End_Month", poco.EndMonth);
-                    cmd.Parameters.AddWithValue("@End_Month", poco.EndYear);
+                    cmd.Parameters.AddWithValue("@End_Year", poco.EndYear);
 
                     cmd.ExecuteNonQuery();
                 }

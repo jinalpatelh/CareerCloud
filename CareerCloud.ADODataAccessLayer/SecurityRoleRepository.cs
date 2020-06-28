@@ -20,10 +20,10 @@ namespace CareerCloud.ADODataAccessLayer
                 conn.Open();
                 foreach (SecurityRolePoco poco in items)
                 {
-                    cmd.CommandText = @"INSERT INTO [dbo].[Security_Logins_Log]
+                    cmd.CommandText = @"INSERT INTO [dbo].[Security_Roles]
                                                        ([Id]
                                                        ,[Role]
-                                                       ,[Is_Inactive]
+                                                       ,[Is_Inactive])
                                                  VALUES
                                                        (@Id
                                                        ,@Role
@@ -68,7 +68,7 @@ namespace CareerCloud.ADODataAccessLayer
                 reader.Close();
                 conn.Close();
             }
-            return pocos;
+            return pocos.Where(a=>a!=null).ToList();
         }
 
         public IList<SecurityRolePoco> GetList(Expression<Func<SecurityRolePoco, bool>> where, params Expression<Func<SecurityRolePoco, object>>[] navigationProperties)
@@ -113,8 +113,6 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.CommandText = @"UPDATE [dbo].[Security_Roles]
                                                SET [Role] = @Role
                                                   ,[Is_Inactive] = @Is_Inactive
-                                                  ,[Logon_Date] = @Logon_Date
-                                                  ,[Is_Succesful] = @Is_Succesful
                                              WHERE [Id] = @Id";
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Role", poco.Role);

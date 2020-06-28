@@ -29,8 +29,8 @@ namespace CareerCloud.ADODataAccessLayer
                                      VALUES
                                            (@Id
                                            ,@Job
-                                           ,@LanguageID
-                                           ,@Company_Name
+                                           ,@Skill
+                                           ,@Skill_Level
                                            ,@Importance)";
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Job", poco.Job);
@@ -53,7 +53,7 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<CompanyJobSkillPoco> GetAll(params Expression<Func<CompanyJobSkillPoco, object>>[] navigationProperties)
         {
-            CompanyJobSkillPoco[] pocos = new CompanyJobSkillPoco[1000];
+            CompanyJobSkillPoco[] pocos = new CompanyJobSkillPoco[5001];
 
             using (SqlConnection conn = new SqlConnection(BaseAdo.connectionString))
             {
@@ -70,7 +70,6 @@ namespace CareerCloud.ADODataAccessLayer
                     poco.Skill = reader.GetString(2);
                     poco.SkillLevel = reader.GetString(3);
                     poco.Importance = reader.GetInt32(4);
-                    poco.TimeStamp = reader[5] as byte[];
 
                     pocos[position] = poco;
                     position++;

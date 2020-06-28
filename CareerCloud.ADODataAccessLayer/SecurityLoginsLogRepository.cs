@@ -25,7 +25,7 @@ namespace CareerCloud.ADODataAccessLayer
                                                        ,[Login]
                                                        ,[Source_IP]
                                                        ,[Logon_Date]
-                                                       ,[Is_Succesful]
+                                                       ,[Is_Succesful])
                                                  VALUES
                                                        (@Id
                                                        ,@Login
@@ -51,7 +51,7 @@ namespace CareerCloud.ADODataAccessLayer
 
         public IList<SecurityLoginsLogPoco> GetAll(params Expression<Func<SecurityLoginsLogPoco, object>>[] navigationProperties)
         {
-            SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[1000];
+            SecurityLoginsLogPoco[] pocos = new SecurityLoginsLogPoco[2000];
 
             using (SqlConnection conn = new SqlConnection(BaseAdo.connectionString))
             {
@@ -75,7 +75,7 @@ namespace CareerCloud.ADODataAccessLayer
                 reader.Close();
                 conn.Close();
             }
-            return pocos;
+            return pocos.Where(a=>a!=null).ToList();
         }
 
         public IList<SecurityLoginsLogPoco> GetList(Expression<Func<SecurityLoginsLogPoco, bool>> where, params Expression<Func<SecurityLoginsLogPoco, object>>[] navigationProperties)
@@ -136,5 +136,4 @@ namespace CareerCloud.ADODataAccessLayer
             }
         }
     }
-
 }

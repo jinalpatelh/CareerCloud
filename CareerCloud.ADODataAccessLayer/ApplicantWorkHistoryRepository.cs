@@ -47,6 +47,7 @@ namespace CareerCloud.ADODataAccessLayer
                     cmd.Parameters.AddWithValue("@Id", poco.Id);
                     cmd.Parameters.AddWithValue("@Applicant", poco.Applicant);
                     cmd.Parameters.AddWithValue("@Company_Name", poco.CompanyName);
+                    cmd.Parameters.AddWithValue("@Country_Code", poco.CountryCode);
                     cmd.Parameters.AddWithValue("@Location", poco.Location);
                     cmd.Parameters.AddWithValue("@Job_Title", poco.JobTitle);
                     cmd.Parameters.AddWithValue("@Job_Description", poco.JobDescription);
