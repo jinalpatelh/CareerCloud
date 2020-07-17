@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CareerCloud.Pocos
 {
-    interface IPoco
+    public interface IPoco
     {
         public Guid Id { get; set; }
     }
