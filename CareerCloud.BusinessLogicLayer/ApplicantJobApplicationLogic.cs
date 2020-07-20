@@ -10,7 +10,6 @@ namespace CareerCloud.BusinessLogicLayer
     {
         public ApplicantJobApplicationLogic(IDataRepository<ApplicantJobApplicationPoco> repository) : base(repository)
         {
-
         }
 
         protected override void Verify(ApplicantJobApplicationPoco[] pocos)
@@ -19,22 +18,18 @@ namespace CareerCloud.BusinessLogicLayer
             foreach(var poco in pocos)
             {
                 if(poco.ApplicationDate > DateTime.Today)
-                {
                     exceptions.Add(new ValidationException(110, $"Application Date for {poco.Id} can't be greater than today!"));
-                }
                 
-                if(exceptions.Count>0)
-                {
-                    throw new AggregateException(exceptions);
-                }
             }
 
+            if (exceptions.Count > 0)
+                throw new AggregateException(exceptions);
         }
 
         public override void Add(ApplicantJobApplicationPoco[] pocos)
         {
             Verify(pocos);
-            base.Add(pocos)
+            base.Add(pocos);
         }
 
         public override void Update(ApplicantJobApplicationPoco[] pocos)

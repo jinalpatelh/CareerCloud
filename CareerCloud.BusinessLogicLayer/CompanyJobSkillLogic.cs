@@ -6,36 +6,34 @@ using System.Text;
 
 namespace CareerCloud.BusinessLogicLayer
 {
-    public class ApplicantWorkHistoryLogic : BaseLogic<ApplicantWorkHistoryPoco>
+    public class CompanyJobSkillLogic : BaseLogic<CompanyJobSkillPoco>
     {
-        public ApplicantWorkHistoryLogic(IDataRepository<ApplicantWorkHistoryPoco> repository) : base(repository)
+        public CompanyJobSkillLogic(IDataRepository<CompanyJobSkillPoco> repository) : base(repository)
         {
+
         }
 
-        protected override void Verify(ApplicantWorkHistoryPoco[] pocos)
+        protected override void Verify(CompanyJobSkillPoco[] pocos)
         {
             List<ValidationException> exceptions = new List<ValidationException>();
             foreach (var poco in pocos)
             {
-                if(poco.CompanyName.Length <= 2)
-                    exceptions.Add(new ValidationException(105, $"Company Name for {poco.Id} must be greater than 2 character."));
+                if(poco.Importance < 0)
+                    exceptions.Add(new ValidationException(400, $"Importance for {poco.Id} can not be less than 0."));
             }
 
             if (exceptions.Count > 0)
                 throw new AggregateException(exceptions);
         }
-
-        public override void Add(ApplicantWorkHistoryPoco[] pocos)
+        public override void Add(CompanyJobSkillPoco[] pocos)
         {
             Verify(pocos);
             base.Add(pocos);
         }
-
-        public override void Update(ApplicantWorkHistoryPoco[] pocos)
+        public override void Update(CompanyJobSkillPoco[] pocos)
         {
             Verify(pocos);
             base.Update(pocos);
         }
-
     }
 }

@@ -10,7 +10,6 @@ namespace CareerCloud.BusinessLogicLayer
     {
         public ApplicantProfileLogic(IDataRepository<ApplicantProfilePoco> repository) : base(repository)
         {
-
         }
 
         protected override void Verify(ApplicantProfilePoco[] pocos)
@@ -19,18 +18,14 @@ namespace CareerCloud.BusinessLogicLayer
             foreach (var poco in pocos)
             {
                 if(poco.CurrentSalary < 0)
-                {
                     exceptions.Add(new ValidationException(111, $"Current salary for {poco.Id} can not be negative."));
-                }
-                else if (poco.CurrentRate < 0)
-                {
+                
+                if (poco.CurrentRate < 0)
                     exceptions.Add(new ValidationException(112, $"Current rate for {poco.Id} can not be negative."));
-                }
-                if (exceptions.Count > 0)
-                {
-                    throw new AggregateException(exceptions);
-                }
             }
+
+            if (exceptions.Count > 0)
+                throw new AggregateException(exceptions);
         }
 
         public override void Add(ApplicantProfilePoco[] pocos)

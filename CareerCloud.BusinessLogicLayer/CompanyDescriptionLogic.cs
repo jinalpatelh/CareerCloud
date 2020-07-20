@@ -10,7 +10,6 @@ namespace CareerCloud.BusinessLogicLayer
     {
         public CompanyDescriptionLogic(IDataRepository<CompanyDescriptionPoco> repository) : base(repository)
         {
-
         }
 
         protected override void Verify(CompanyDescriptionPoco[] pocos)
@@ -18,21 +17,19 @@ namespace CareerCloud.BusinessLogicLayer
             List<ValidationException> exceptions = new List<ValidationException>();
             foreach (var poco in pocos)
             {
-                if(poco.CompanyDescription.Length <= 2)
-                {
+                if(string.IsNullOrEmpty(poco.CompanyDescription))
                     exceptions.Add(new ValidationException(107, $"Company Description for {poco.Id} must be greater than 2 characters."));
-                }
-                else if(poco.CompanyName.Length <= 2)
-                {
+                else if(poco.CompanyDescription.Length <= 2)
+                    exceptions.Add(new ValidationException(107, $"Company Description for {poco.Id} must be greater than 2 characters."));
+
+                if(string.IsNullOrEmpty(poco.CompanyName))
                     exceptions.Add(new ValidationException(106, $"Company Name for {poco.Id} must be greater than 2 characters."));
-                }
-
-                if(exceptions.Count > 0)
-                {
-                    throw new AggregateException(exceptions);
-                }
-
+                else if(poco.CompanyName.Length <= 2)
+                    exceptions.Add(new ValidationException(106, $"Company Name for {poco.Id} must be greater than 2 characters."));
             }
+
+            if (exceptions.Count > 0)
+                throw new AggregateException(exceptions);
         }
 
         public override void Add(CompanyDescriptionPoco[] pocos)

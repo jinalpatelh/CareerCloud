@@ -56,22 +56,14 @@ namespace CareerCloud.BusinessLogicLayer
             foreach (var poco in pocos)
             {
                 if (string.IsNullOrEmpty(poco.Password))
-                {
                     exceptions.Add(new ValidationException(700, $"Password for SecurityLogin {poco.Id} cannot be null"));
-                }
                 else if (poco.Password.Length < 10)
-                {
                     exceptions.Add(new ValidationException(700, $"Password for SecurityLogin {poco.Id} must be at least 10 characters."));
-                }
                 else if (!requiredExtendedPasswordChars.Any(t => poco.Password.Contains(t)))
-                {
                     exceptions.Add(new ValidationException(701, $"Password for SecurityLogin {poco.Id} must contain an extended character of '$', '*', '#', '_' or '@' ."));
-                }
 
                 if (string.IsNullOrEmpty(poco.PhoneNumber))
-                {
                     exceptions.Add(new ValidationException(702, $"PhoneNumber for SecurityLogin {poco.Id} is required"));
-                }
                 else
                 {
                     string[] phoneComponents = poco.PhoneNumber.Split('-');
@@ -97,25 +89,17 @@ namespace CareerCloud.BusinessLogicLayer
                 }
 
                 if (string.IsNullOrEmpty(poco.EmailAddress))
-                {
                     exceptions.Add(new ValidationException(704, "EmailAddress for SecurityLogin {poco.Id} is not a valid email address format."));
-                }
                 else if (!Regex.IsMatch(poco.EmailAddress, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
-                {
                     exceptions.Add(new ValidationException(704, "EmailAddress for SecurityLogin {poco.Id} is not a valid email address format."));
-                }
 
                 if (string.IsNullOrEmpty(poco.FullName))
-                {
                     exceptions.Add(new ValidationException(705, "FullName for SecurityLogin {poco.Id} is required."));
-                }
 
             }
 
             if (exceptions.Count > 0)
-            {
                 throw new AggregateException(exceptions);
-            }
         }
 
         private static byte[] GetSalt()
