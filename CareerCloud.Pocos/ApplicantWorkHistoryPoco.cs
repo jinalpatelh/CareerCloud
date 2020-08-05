@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
@@ -39,6 +38,13 @@ namespace CareerCloud.Pocos
         public int EndYear { get; set; }
         
         [Column("Time_Stamp")]
+        [Timestamp]
         public byte[] TimeStamp { get; set; }
+
+        [ForeignKey("Applicant")]
+        public virtual ApplicantProfilePoco ApplicantProfile { get; set; }
+
+        [ForeignKey("CountryCode")]
+        public virtual SystemCountryCodePoco SystemCountryCode { get; set; }
     }
 }
