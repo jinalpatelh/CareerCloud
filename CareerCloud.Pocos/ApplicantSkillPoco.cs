@@ -32,8 +32,6 @@ namespace CareerCloud.Pocos
         [Column("Time_Stamp")]
         [Timestamp]
         public byte[] TimeStamp { get; set; }
-
-        [ForeignKey("Applicant")]
         public virtual ApplicantProfilePoco ApplicantProfile { get; set; }
     }
 }
