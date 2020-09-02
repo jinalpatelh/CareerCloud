@@ -2,6 +2,7 @@
 using CareerCloud.Pocos;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -17,19 +18,43 @@ namespace CareerCloud.BusinessLogicLayer
         protected override void Verify(CompanyProfilePoco[] pocos)
         {
             List<ValidationException> exceptions = new List<ValidationException>();
-            foreach (var poco in pocos)
+            
+            string[] validDomains = { ".ca", ".com", ".biz" };
+            
+            foreach (CompanyProfilePoco poco in pocos)
             {
-                if(string.IsNullOrEmpty(poco.ContactPhone))
+                if (string.IsNullOrEmpty(poco.ContactPhone))
                     exceptions.Add(new ValidationException(600, $"Contact Phone for {poco.Id} must correspond to valid number."));
-                else if(!System.Text.RegularExpressions.Regex.IsMatch(poco.ContactPhone, @"^[01]?[- .]?(\([2-9]\d{2}\)|[2-9]\d{2})[- .]?\d{3}[- .]?\d{4}$", RegexOptions.IgnoreCase))
-                    exceptions.Add(new ValidationException(600, $"Contact Phone for {poco.Id} must correspond to valid number."));
+                else
+                {
+                    string[] phoneComponents = poco.ContactPhone.Split('-');
+                    if (phoneComponents.Length < 3)
+                    {
+                        exceptions.Add(new ValidationException(601, $"ContactPhone for CompanyProfile {poco.ContactPhone} is not in the required format."));
+                    }
+                    else
+                    {
+                        if (phoneComponents[0].Length < 3)
+                        {
+                            exceptions.Add(new ValidationException(601, $"ContactPhone for {poco.Id} CompanyProfile {poco.ContactPhone} is not in the required format."));
+                        }
+                        else if (phoneComponents[1].Length < 3)
+                        {
+                            exceptions.Add(new ValidationException(601, $"ContactPhone for {poco.Id} CompanyProfile {poco.ContactPhone} is not in the required format."));
+                        }
+                        else if (phoneComponents[2].Length < 4)
+                        {
+                            exceptions.Add(new ValidationException(601, $"ContactPhone for {poco.Id} CompanyProfile {poco.ContactPhone} is not in the required format."));
+                        }
+                    }
+                }
 
                 if(string.IsNullOrEmpty(poco.CompanyWebsite))
                     exceptions.Add(new ValidationException(601, $"Company website for {poco.Id} must correspond to valid web address"));
-                else if(!Regex.IsMatch(poco.CompanyWebsite, @"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z", RegexOptions.IgnoreCase))
+                else if(!validDomains.Any(d => poco.CompanyWebsite.EndsWith(d)))
                     exceptions.Add(new ValidationException(601, $"Company website for {poco.Id} must correspond to valid web address"));
             }
-
+            
             if (exceptions.Count > 0)
                 throw new AggregateException(exceptions);
         }
